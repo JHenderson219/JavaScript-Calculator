@@ -1,11 +1,126 @@
 <!doctype HTML>
+<html lang="en">
 <head>
-	
+	<meta charset="UTF-8">
+ 	<title>JavaScript Calculator by Jordan Henderson</title>
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+	<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/calcStyle.css">
 </head>
 <body>
-
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1 class="text-center">JavaScript Calculator</h1>
+				<h4 class="text-center"><em>A <a href="https://www.freecodecamp.com/" target="_blank">Free Code Camp <i class="fa fa-free-code-camp" aria-hidden="true"></i></a> project by Jordan Henderson</em></h4>
+			</div>
+		</div>
+		<form>
+		<div class = "form-group">
+		<div class ="well well-lg">
+			<div class="row">
+				<div class = "col-lg-4">
+				</div>
+				<div class="col-lg-4">
+					<input class="form-control text-right input-lg" type="number" value="0" id="calcBox">
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class ="col-lg-4">
+				</div>
+				<div class="col-lg-4">
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn7">7</button>
+					</div> 
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn8">8</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn9">9</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btnDivide">&divide;</button>
+					</div>
+					</div>
+				</div>
+				<br>
+			<div class="row">
+				<div class ="col-lg-4">
+				</div>
+				<div class="col-lg-4">
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn4">4</button>
+					</div> 
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn5">5</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn6">6</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btnTimes">&times;</button>
+					</div>
+					</div>
+				</div>
+					<br>
+			<div class="row">
+				<div class ="col-lg-4">
+				</div>
+				<div class="col-lg-4">
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn1">1</button>
+					</div> 
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn2">2</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn3">3</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btnSubtract">&minus;</button>
+					</div>
+					</div>
+				</div>
+					<br>
+			<div class="row">
+				<div class ="col-lg-4">
+				</div>
+				<div class="col-lg-4">
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btn0">0</button>
+					</div> 
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btnPeriod">&period;</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block" id="btnPlus">&plus;</button>
+					</div>
+					<div class = "col-xs-3" aria-label="...">
+						<button type="button" class="btn btn-default btn-lg btn-block center-block btn-style" id="btnEquals">&equals;</button>
+					</div>
+					</div>
+				</div>
+					<br>
+			<div class="row">
+				<div class ="col-lg-4">
+				</div>
+					<div class="col-lg-4 col-xs-12">
+					<button type="button" class="btn btn-default btn-lg btn-block center-block btn-style" id="btnClear">C</button>
+					</div>
+			</div>
+		</div>
+		</form>
+	</div>
 </body>
-
 <footer>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+	<script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+	<script src="scripts/jquery.ui.touch-punch.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="scripts/calcScript.js"></script>	
 </footer>
+</html>

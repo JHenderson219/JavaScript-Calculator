@@ -1,0 +1,17 @@
+body{
+	background-color: #292929;
+	background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+	color: white;
+	font-family: 'Oswald', sans-serif;
+}
+a:link, a:visited, a:hover, a:active{
+	color: inherit;
+	text-decoration: none;
+}
+.well{
+	background-color: #626468;
+}
+.btn-lg{
+	font-size : 30px;
+	padding: 10px;
+}	
