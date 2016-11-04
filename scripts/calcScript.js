@@ -1,22 +1,24 @@
 
 $(document).ready(function() {
-	var calcReset = true;
+	var placeNumber = 0;
 	var currentCalc = [];
+	var calcIsReset = true;
 	function resetCalc(){
 		currentCalc = [];
+		calcIsReset = true;
 		$("#calcScreen").empty().append(0);
-		calcReset = true;
 	};
 	function numberClicked(num){
-	if (calcReset === true){
+	if (calcIsReset === true){
 		$("#calcScreen").empty().append(num).addClass("text-right");
 			currentCalc.push(num);
-			calcReset = false;
-		} else if (calcReset === false){
-			$("#calcScreen").append(num);
-			currentCalc.push(num);
+			calcIsReset = false;
+	} else if (calcIsReset === false){
+		$("#calcScreen").append(num);
+		currentCalc.push(num);
 		}
 	}
+
 	//Click Events for buttons.
 	$("#btnClear").click(function(){
 		resetCalc();
