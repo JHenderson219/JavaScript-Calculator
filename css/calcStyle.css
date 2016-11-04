@@ -3,6 +3,7 @@ body{
 	background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
 	color: white;
 	font-family: 'Oswald', sans-serif;
+	font-size: 30px;
 }
 a:link, a:visited, a:hover, a:active{
 	color: inherit;
@@ -15,3 +16,7 @@ a:link, a:visited, a:hover, a:active{
 	font-size : 30px;
 	padding: 10px;
 }	
+.white-background{
+	background-color: white;
+	color: black;
+}
