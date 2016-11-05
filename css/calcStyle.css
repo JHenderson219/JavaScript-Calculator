@@ -19,4 +19,5 @@ a:link, a:visited, a:hover, a:active{
 .white-background{
 	background-color: white;
 	color: black;
+	height: 52px;
 }
