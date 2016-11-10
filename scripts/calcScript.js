@@ -28,7 +28,7 @@ $(document).ready(function() {
 	function resetForOperationChain(){
 		calcIsReset = true;
 		operationReady = true;
-		operatorReady = false;
+		operatorReady = true;
 		console.log("Reset for operation chain complete!")
 	}
 	function decimalClicked(dec){
@@ -54,9 +54,9 @@ $(document).ready(function() {
 	
 	function operatorClicked(op){
 		console.log("Operator "+op+" clicked!");
-		console.log ("Is operationReady? "+operationReady);
-		console.log ("Is operatorReady? "+operatorReady);
-		if (operatorReady === true && operationReady === false){ //FIRST OPERATION BETWEEN CLEAR
+		console.log ("Ready to perform operation? "+operationReady);
+		console.log ("Operator selected? "+operatorReady);
+		if (operatorReady === false && operationReady === false){ //FIRST OPERATION BETWEEN CLEAR
 			holdNum = currentNum;
 			currentNum = 0;
 			currentOperator = op;
@@ -66,12 +66,14 @@ $(document).ready(function() {
 			console.log("holdNum is "+holdNum);
 			console.log("current number is "+currentNum);
 			console.log("currentOperator is " + op);
-		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED FOR FIRST TIME BETWEEN CLEARS
-			console.log("Chaining operation first time..."+holdNum.toString()+currentOperator+currentNum.toString());
+		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED
+			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
 			holdNum = runCalc(holdNum,currentOperator,currentNum);
 			currentNum = 0;
 			$("#calcScreen").empty().append(holdNum).addClass("text-right");
 			currentOperator = op;
+			operatorReady = true;
+			operationReady = true;
 			resetForOperationChain();
 		} else if (operatorReady === false && operationReady === true){ //OPERATION BEING CHAINED FOR SECOND OR MORE TIME, READY TO RECIEVE OPERATOR AND READY TO CALCULATE
 			console.log("Chaining operation second+ time..."+holdNum.toString()+currentOperator+currentNum.toString());
