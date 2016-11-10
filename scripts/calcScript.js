@@ -67,6 +67,7 @@ $(document).ready(function() {
 			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
 			runCalc(holdNum,currentOperator,currentNum);
 			$("#calcScreen").empty().append(currentNum).addClass("text-right");
+			resetAfterEquals();
 		} else if (operatorReady === false){
 			currentOperator = op;
 		}
