@@ -15,7 +15,7 @@ $(document).ready(function() {
 		operatorReady = false;
 		currentOperator = undefined;
 		hasDecimal = false;
-		$("#calcScreen").empty().append(0);
+		$("#calcScreen").empty().append(0).addClass("text-right");
 		console.log("Reset Complete!")
 	}
 
