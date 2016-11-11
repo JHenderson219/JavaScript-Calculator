@@ -6,7 +6,8 @@ $(document).ready(function() {
 	var calcIsReset = true;
 	var operatorReady = false;
 	var hasDecimal = false;
-
+	var multDiv = /[*/]/gi;
+	
 	function resetCalc(){
 		currentNum = 0;
 		holdNum = 0;
@@ -81,6 +82,7 @@ $(document).ready(function() {
 	}
 	
 	function operatorClicked(op){
+			console.log("Operator is:"+op);
 			if (operatorReady === false && operationReady === false){ //FIRST OPERATION BETWEEN CLEARS
 			holdNum = currentNum;
 			currentNum = 0;
@@ -94,6 +96,10 @@ $(document).ready(function() {
 			console.log("currentOperator is " + op);
 		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED WITH OPERATORS
 			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
+			if (currentNum === 0 || holdNum===0 && op === "/"){
+				alert("Can not divide by zero!");
+				return;
+			}
 			holdNum = runCalc(holdNum,currentOperator,currentNum);
 			hasDecimal = false;
 			currentNum = 0;
