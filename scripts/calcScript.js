@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 	var holdNum = 0;
 	var currentNum = 0;
@@ -6,6 +5,7 @@ $(document).ready(function() {
 	var operationReady = false;
 	var calcIsReset = true;
 	var operatorReady = false;
+	var hasDecimal = false;
 
 	function resetCalc(){
 		currentNum = 0;
@@ -14,6 +14,7 @@ $(document).ready(function() {
 		operationReady = false;
 		operatorReady = false;
 		currentOperator = undefined;
+		hasDecimal = false;
 		$("#calcScreen").empty().append(0);
 		console.log("Reset Complete!")
 	}
@@ -23,16 +24,34 @@ $(document).ready(function() {
 		operationReady = false;
 		operatorReady = false;
 		currentOperator = undefined;
+		hasDecimal = false;
 		console.log("Reset after Equals complete!");
 	}
 	function resetForOperationChain(){
 		calcIsReset = true;
 		operationReady = true;
 		operatorReady = true;
+		hasDecimal = false;
 		console.log("Reset for operation chain complete!")
 	}
+
 	function decimalClicked(dec){
-		console.log("decimal clicked!");
+		console.log("Decimal clicked!");
+		if (hasDecimal === false && calcIsReset === true){ //if it doesn't have a decimal, and the calc is reset, add a decimal to the end
+			currentNum = 0
+			currentNum = currentNum.toString().concat(dec);
+			$("#calcScreen").empty().append(currentNum).addClass("text-right");
+			hasDecimal = true;
+			calcIsReset = false;
+			console.log("Calc was at zero and decimal was added! New num is: "+currentNum);
+		} else if (hasDecimal === false && calcIsReset === false){ //if it doesn't have a decimal, but the calc is not reset, add a decimal to the end
+			currentNum = currentNum.concat(dec);
+			$("#calcScreen").append(dec);
+			hasDecimal = true;
+			console.log ("Calc was not reset and decimal was added! New num is: "+currentNum);
+		}else if (hasDecimal === true){//if it has a decimal, do nothing
+		}
+		
 	}
 	function numberClicked(num){
 	console.log("number clicked!")
@@ -53,13 +72,11 @@ $(document).ready(function() {
 	}
 	
 	function operatorClicked(op){
-		console.log("Operator "+op+" clicked!");
-		console.log ("Ready to perform operation? "+operationReady);
-		console.log ("Operator selected? "+operatorReady);
 		if (operatorReady === false && operationReady === false){ //FIRST OPERATION BETWEEN CLEAR
 			holdNum = currentNum;
 			currentNum = 0;
 			currentOperator = op;
+			hasDecimal = false;
 			calcIsReset = true;
 			operatorReady = true;
 			operationReady = true;
@@ -69,6 +86,7 @@ $(document).ready(function() {
 		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED
 			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
 			holdNum = runCalc(holdNum,currentOperator,currentNum);
+			hasDecimal = false;
 			currentNum = 0;
 			$("#calcScreen").empty().append(holdNum).addClass("text-right");
 			currentOperator = op;
@@ -79,11 +97,15 @@ $(document).ready(function() {
 			console.log("Chaining operation second+ time..."+holdNum.toString()+currentOperator+currentNum.toString());
 			holdNum = runCalc(holdNum,currentOperator,currentNum);
 			currentNum = 0;
+			hasDecimal = false;
 			currentOperator = op;
 			resetForOperationChain();
-		} else if (operatorReady === true){
+		} else if (operatorReady === true){ //Currently impossible to trigger; overrides operator
 			currentOperator = op;
 		}
+		console.log("Operator "+op+" clicked!");
+		console.log ("Ready to perform operation? "+operationReady);
+		console.log ("Operator selected? "+operatorReady);
 	}
 	
 	function runCalc(num1,operand,num2){ //MAKE SURE TO RESET ALL WHEN CALC ORDERED
@@ -138,7 +160,7 @@ $(document).ready(function() {
 		}
 	});
 	$("#btnPeriod").click(function(){  //PERIOD/DECIMAL IS HERE
-	
+		decimalClicked(".");
 	});
 	
 	$("#btnPlus").click(function(){  //PLUS IS HERE
@@ -148,9 +170,11 @@ $(document).ready(function() {
 		if (currentOperator != undefined){
 		console.log("Equals Executing...");
 		var result = runCalc(holdNum,currentOperator,currentNum);
+		holdNum = result;
 		$("#calcScreen").empty().append(result);
 		console.log("result of calculation is: "+result);
 		console.log("current num is now: "+currentNum);
+		console.log("hold num is now: "+holdNum);
 		resetAfterEquals();
 		} else {
 		alert("Please select an operator first! Calculator has been reset.")
