@@ -195,4 +195,72 @@ $(document).ready(function() {
 		resetCalc();
 		}
 	});
+	//Tap Events for Buttons
+	$("#btnClear").on("tap",function(){
+		resetCalc();
+	});
+	$("#btn7").on("tap",function(){
+		numberClicked(7);
+	});
+	$("#btn8").on("tap",function(){
+		numberClicked(8);
+	});
+	$("#btn9").on("tap",function(){
+		numberClicked(9);
+	});
+	$("#btnDivide").on("tap",function(){  //DIVIDE IS HERE
+		operatorClicked("/");
+	});
+	$("#btn4").on("tap",function(){
+		numberClicked(4);
+	});
+	$("#btn5").on("tap",function(){
+		numberClicked(5);
+	});
+	$("#btn6").on("tap",function(){
+		numberClicked(6);
+	});
+	$("#btnTimes").on("tap",function(){  //TIMES IS HERE
+		operatorClicked("*");
+	});
+	$("#btn1").on("tap",function(){
+		numberClicked(1);
+	});
+	$("#btn2").on("tap",function(){
+		numberClicked(2);
+	});
+	$("#btn3").on("tap",function(){
+		numberClicked(3);
+	});
+	$("#btnMinus").on("tap",function(){  //MINUS IS HERE
+		operatorClicked("-");
+	});
+	$("#btn0").on("tap",function(){
+		if(calcIsReset===true){
+		} else if (calcIsReset===false){
+		numberClicked(0);	
+		}
+	});
+	$("#btnPeriod").on("tap",function(){  //PERIOD/DECIMAL IS HERE
+		decimalClicked(".");
+	});
+	
+	$("#btnPlus").on("tap",function(){  //PLUS IS HERE
+		operatorClicked("+");
+	});
+	$("#btnEquals").on("tap",function(){  //EQUALS IS HERE
+		if (currentOperator != undefined){
+		console.log("Equals Executing...");
+		var result = runCalc(holdNum,currentOperator,currentNum);
+		holdNum = result;
+		$("#calcScreen").empty().append(result);
+		console.log("result of calculation is: "+result);
+		console.log("current num is now: "+currentNum);
+		console.log("hold num is now: "+holdNum);
+		resetAfterEquals();
+		} else {
+		alert("Please select an operator first! Calculator has been reset.")
+		resetCalc();
+		}
+	});
 });
