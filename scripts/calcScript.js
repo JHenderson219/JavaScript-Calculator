@@ -6,7 +6,8 @@ $(document).ready(function() {
 	var calcIsReset = true;
 	var operatorReady = false;
 	var hasDecimal = false;
-
+	var multDiv = /[*/]/gi;
+	
 	function resetCalc(){
 		currentNum = 0;
 		holdNum = 0;
@@ -81,6 +82,7 @@ $(document).ready(function() {
 	}
 	
 	function operatorClicked(op){
+			console.log("Operator is:"+op);
 			if (operatorReady === false && operationReady === false){ //FIRST OPERATION BETWEEN CLEARS
 			holdNum = currentNum;
 			currentNum = 0;
@@ -94,6 +96,10 @@ $(document).ready(function() {
 			console.log("currentOperator is " + op);
 		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED WITH OPERATORS
 			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
+			if (currentNum === 0 || holdNum===0 && op === "/"){
+				alert("Can not divide by zero!");
+				return;
+			}
 			holdNum = runCalc(holdNum,currentOperator,currentNum);
 			hasDecimal = false;
 			currentNum = 0;
@@ -175,6 +181,74 @@ $(document).ready(function() {
 		operatorClicked("+");
 	});
 	$("#btnEquals").click(function(){  //EQUALS IS HERE
+		if (currentOperator != undefined){
+		console.log("Equals Executing...");
+		var result = runCalc(holdNum,currentOperator,currentNum);
+		holdNum = result;
+		$("#calcScreen").empty().append(result);
+		console.log("result of calculation is: "+result);
+		console.log("current num is now: "+currentNum);
+		console.log("hold num is now: "+holdNum);
+		resetAfterEquals();
+		} else {
+		alert("Please select an operator first! Calculator has been reset.")
+		resetCalc();
+		}
+	});
+	//Tap Events for Buttons
+	$("#btnClear").on("tap",function(){
+		resetCalc();
+	});
+	$("#btn7").on("tap",function(){
+		numberClicked(7);
+	});
+	$("#btn8").on("tap",function(){
+		numberClicked(8);
+	});
+	$("#btn9").on("tap",function(){
+		numberClicked(9);
+	});
+	$("#btnDivide").on("tap",function(){  //DIVIDE IS HERE
+		operatorClicked("/");
+	});
+	$("#btn4").on("tap",function(){
+		numberClicked(4);
+	});
+	$("#btn5").on("tap",function(){
+		numberClicked(5);
+	});
+	$("#btn6").on("tap",function(){
+		numberClicked(6);
+	});
+	$("#btnTimes").on("tap",function(){  //TIMES IS HERE
+		operatorClicked("*");
+	});
+	$("#btn1").on("tap",function(){
+		numberClicked(1);
+	});
+	$("#btn2").on("tap",function(){
+		numberClicked(2);
+	});
+	$("#btn3").on("tap",function(){
+		numberClicked(3);
+	});
+	$("#btnMinus").on("tap",function(){  //MINUS IS HERE
+		operatorClicked("-");
+	});
+	$("#btn0").on("tap",function(){
+		if(calcIsReset===true){
+		} else if (calcIsReset===false){
+		numberClicked(0);	
+		}
+	});
+	$("#btnPeriod").on("tap",function(){  //PERIOD/DECIMAL IS HERE
+		decimalClicked(".");
+	});
+	
+	$("#btnPlus").on("tap",function(){  //PLUS IS HERE
+		operatorClicked("+");
+	});
+	$("#btnEquals").on("tap",function(){  //EQUALS IS HERE
 		if (currentOperator != undefined){
 		console.log("Equals Executing...");
 		var result = runCalc(holdNum,currentOperator,currentNum);
