@@ -8,6 +8,7 @@ $(document).ready(function() {
 	var hasDecimal = false;
 	var multDiv = /[*/]/gi;
 	
+	//Resets all variables for the application
 	function resetCalc(){
 		currentNum = 0;
 		holdNum = 0;
@@ -19,7 +20,7 @@ $(document).ready(function() {
 		$("#calcScreen").empty().append(0).addClass("text-right");
 		console.log("Reset Complete!")
 	}
-
+	//Resets a limited set of variable to continue calculations after the equals button is clicked.
 	function resetAfterEquals(){
 		calcIsReset = true;
 		operationReady = true;
@@ -31,6 +32,7 @@ $(document).ready(function() {
 		console.log("holdNum is "+holdNum);
 		console.log("current number is "+currentNum);
 	}
+	//Resets a limited set of variable to continue calculations in succession
 	function resetForOperationChain(){
 		calcIsReset = true;
 		operationReady = true;
@@ -41,38 +43,44 @@ $(document).ready(function() {
 		console.log("current number is "+currentNum)
 	}
 
+	//If calculator is reset, and the current number doesn't have a decimal,
+	//adds decimal to number and allows making a longer decimal number.
+	//If the calculator is not reset and the current number in the screen does not have a decimal, adds a decimal
+	//
 	function decimalClicked(dec){
 		console.log("Decimal clicked!");
-		if (hasDecimal === false && calcIsReset === true){ //if it doesn't have a decimal, and the calc is reset, add a decimal to the end
-			currentNum = 0
+		if (!hasDecimal && calcIsReset){ //if it doesn't have a decimal, and the calc is reset, add a decimal to the end
+			currentNum = 0;
 			currentNum = currentNum.toString().concat(dec);
 			$("#calcScreen").empty().append(currentNum).addClass("text-right");
 			hasDecimal = true;
 			calcIsReset = false;
 			console.log("Calc was at zero and decimal was added! New num is: "+currentNum);
-		} else if (hasDecimal === false && calcIsReset === false){ //if it doesn't have a decimal, but the calc is not reset, add a decimal to the end
+		} else if (!hasDecimal && !calcIsReset){ //if it doesn't have a decimal, but the calc is not reset, add a decimal to the end
 			currentNum = currentNum.concat(dec);
 			$("#calcScreen").append(dec);
 			hasDecimal = true;
 			console.log ("Calc was not reset and decimal was added! New num is: "+currentNum);
-		}else if (hasDecimal === true){//if it has a decimal, do nothing
 		}
-		
 	}
+
+	//Given a number, if an operation is ready and no operator is selected, resets the calculator and runs again
+	//If the calculator is reset, replaces the default zero with the number clicked on screen and updates current num.
+	//If the calculator is not reset, appends the number to the current number.
 	function numberClicked(num){
 	console.log("number clicked!")
-	if (operationReady === true && operatorReady === false){
+	if (operationReady && !operatorReady){
 		console.log("Operation ready but no operator. Reset needed!");
 		resetCalc();
 		numberClicked(num);
-	}else if (calcIsReset === true){
+	}else if (calcIsReset){
 		console.log("Is calc reset? "+ calcIsReset);
 		$("#calcScreen").empty().append(num).addClass("text-right");
 		currentNum = num.toString();
 		calcIsReset = false;
 		console.log("holdNum is "+holdNum);
 		console.log("current number is "+currentNum);
-	} else if (calcIsReset === false){
+	} else if (!calcIsReset){
 		console.log("Is calc reset? "+ calcIsReset);
 		$("#calcScreen").append(num);
 		currentNum = currentNum.concat(num.toString());
@@ -81,9 +89,13 @@ $(document).ready(function() {
 		}
 	}
 	
+	//Given a selected operator:
+	//If it is the first operation between clears, moves current number to hold number and readies to accept next number
+	//If it is the second operation caused by chanining operators, performs the calculation and updates screen, if not dividing by zero.
+	//If it is the second operation and is caused by use of the equals sign, as above for second operations, except resets different variables to allow chaining properly.
 	function operatorClicked(op){
 			console.log("Operator is:"+op);
-			if (operatorReady === false && operationReady === false){ //FIRST OPERATION BETWEEN CLEARS
+			if (!operatorReady && !operationReady){ //FIRST OPERATION BETWEEN CLEARS
 			holdNum = currentNum;
 			currentNum = 0;
 			currentOperator = op;
@@ -94,7 +106,7 @@ $(document).ready(function() {
 			console.log("holdNum is "+holdNum);
 			console.log("current number is "+currentNum);
 			console.log("currentOperator is " + op);
-		} else if (operatorReady === true && operationReady === true){ //OPERATION IS BEING CHAINED WITH OPERATORS
+		} else if (operatorReady && operationReady){ //OPERATION IS BEING CHAINED WITH OPERATORS
 			console.log("Chaining operation..."+holdNum.toString()+currentOperator+currentNum.toString());
 			if (currentNum === 0 || holdNum===0 && op === "/"){
 				alert("Can not divide by zero!");
@@ -108,13 +120,13 @@ $(document).ready(function() {
 			operatorReady = true;
 			operationReady = true;
 			resetForOperationChain();
-		} else if (operatorReady === false && operationReady === true){ //OPERATION BEING CHAINED AFTER AND EQUALS
+		} else if (!operatorReady && operationReady){ //OPERATION BEING CHAINED AFTER AND EQUALS
 			console.log("Chaining operation after equals..."+holdNum.toString()+currentOperator+currentNum.toString());
 			currentNum = 0;
 			hasDecimal = false;
 			currentOperator = op;
 			resetForOperationChain();
-		} else if (operatorReady === true){ //Currently impossible to trigger; overrides operator
+		} else if (operatorReady){ //Currently impossible to trigger; overrides operator
 			currentOperator = op;
 		}
 		console.log("Operator "+op+" clicked!");
@@ -122,6 +134,8 @@ $(document).ready(function() {
 		console.log ("Operator selected? "+operatorReady);
 	}
 	
+	//Calculates the result of the current operation.
+
 	function runCalc(num1,operand,num2){ //MAKE SURE TO RESET ALL WHEN CALC ORDERED
 		var calcResult = eval(num1+operand+num2);
 		return calcResult;
@@ -195,6 +209,8 @@ $(document).ready(function() {
 		resetCalc();
 		}
 	});
+
+	
 	//Tap Events for Buttons
 	$("#btnClear").on("tap",function(){
 		resetCalc();
